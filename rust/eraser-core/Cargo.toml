@@ -1,0 +1,34 @@
+[package]
+name = "eraser-core"
+version = "0.1.0"
+edition = "2021"
+license = "UNLICENSED"
+publish = false
+
+[lib]
+name = "eraser_core"
+crate-type = ["cdylib", "staticlib", "rlib"]
+
+[[bin]]
+name = "uniffi-bindgen"
+path = "src/bin/uniffi-bindgen.rs"
+
+[dependencies]
+uniffi = { version = "0.29", features = ["cli"] }
+# Inference ONNX. load-dynamic: libonnxruntime.so dibundel terpisah (lihat
+# tools/fetch_onnxruntime.sh), jadi satu build Rust melayani host dan Android.
+# api-27 cocok dengan ONNX Runtime 1.28 yang dibundel.
+ort = { version = "=2.0.0-rc.13", default-features = false, features = [
+    "std",
+    "ndarray",
+    "load-dynamic",
+    "api-27",
+    "xnnpack",
+    "nnapi",
+] }
+
+[profile.release]
+lto = "fat"
+codegen-units = 1
+panic = "abort"
+strip = true
