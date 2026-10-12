@@ -33,13 +33,27 @@ if [ ! -f app/key.properties ] && [ "$ALLOW_UNSIGNED" -ne 1 ]; then
 fi
 
 export GRADLE_USER_HOME="${GRADLE_USER_HOME:-$HOME/.gradle}"
-export JAVA_HOME="${JAVA_HOME:-$HOME/sdks/jdk-17}"
+if [ -z "${JAVA_HOME:-}" ]; then
+    if [ "$(uname -s)" = "Darwin" ] && [ -x /usr/libexec/java_home ]; then
+        JAVA_HOME="$(/usr/libexec/java_home)"
+    else
+        JAVA_HOME="$HOME/sdks/jdk-17"
+    fi
+    export JAVA_HOME
+fi
 export JAVA_OPTS="-Djava.net.preferIPv4Stack=true"
 export GRADLE_OPTS="-Djava.net.preferIPv4Stack=true"
-export ANDROID_SDK_ROOT="${ANDROID_SDK_ROOT:-$HOME/sdks/android-sdk}"
+if [ -z "${ANDROID_SDK_ROOT:-}" ]; then
+    if [ "$(uname -s)" = "Darwin" ]; then
+        ANDROID_SDK_ROOT="$HOME/Library/Android/sdk"
+    else
+        ANDROID_SDK_ROOT="$HOME/sdks/android-sdk"
+    fi
+    export ANDROID_SDK_ROOT
+fi
 export PATH="$HOME/.cargo/bin:$PATH"
 
-./gradlew :app:assembleRelease --no-daemon
+bash gradlew :app:assembleRelease --no-daemon
 
 APK_DIR=app/build/outputs/apk/release
 if [ -f app/key.properties ]; then
@@ -64,4 +78,8 @@ else
 fi
 
 echo "Ukuran: $(du -h "$APK" | cut -f1)  ($APK)"
-echo "SHA-256: $(sha256sum "$APK" | cut -d' ' -f1)"
+if command -v sha256sum >/dev/null 2>&1; then
+    echo "SHA-256: $(sha256sum "$APK" | cut -d' ' -f1)"
+else
+    echo "SHA-256: $(shasum -a 256 "$APK" | cut -d' ' -f1)"
+fi

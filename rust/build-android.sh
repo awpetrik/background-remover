@@ -13,7 +13,11 @@ if [ -z "${ANDROID_NDK_HOME:-}" ]; then
     SDK="${ANDROID_SDK_ROOT:-$HOME/sdks/android-sdk}"
     ANDROID_NDK_HOME="$(ls -d "$SDK"/ndk/* | sort -V | tail -1)"
 fi
-TOOLCHAIN="$ANDROID_NDK_HOME/toolchains/llvm/prebuilt/linux-x86_64"
+case "$(uname -s)" in
+    Darwin) HOST_TAG=darwin-x86_64 ;;
+    *) HOST_TAG=linux-x86_64 ;;
+esac
+TOOLCHAIN="$ANDROID_NDK_HOME/toolchains/llvm/prebuilt/$HOST_TAG"
 echo "NDK: $ANDROID_NDK_HOME"
 
 export CARGO_TARGET_AARCH64_LINUX_ANDROID_LINKER="$TOOLCHAIN/bin/aarch64-linux-android${API}-clang"
