@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<issues format="6" by="lint 9.4.1" type="baseline" client="gradle" dependencies="false" name="AGP (9.4.1)" variant="all" version="9.4.1">
+
+    <issue
+        id="NewApi"
+        message="Call requires API level 33 (current min is 29): `java.lang.ref.Cleaner#create`"
+        errorLine1="    val cleaner = java.lang.ref.Cleaner.create()"
+        errorLine2="                                        ~~~~~~">
+        <location
+            file="src/main/java/uniffi/eraser_core/eraser_core.kt"
+            line="1486"
+            column="41"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="Call requires API level 33 (current min is 29): `java.lang.ref.Cleaner#register`"
+        errorLine1="        JavaLangRefCleanable(cleaner.register(value, cleanUpTask))"
+        errorLine2="                                     ~~~~~~~~">
+        <location
+            file="src/main/java/uniffi/eraser_core/eraser_core.kt"
+            line="1489"
+            column="38"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="Call requires API level 33 (current min is 29): `java.lang.ref.Cleaner.Cleanable#clean`"
+        errorLine1="    override fun clean() = cleanable.clean()"
+        errorLine2="                                     ~~~~~">
+        <location
+            file="src/main/java/uniffi/eraser_core/eraser_core.kt"
+            line="1495"
+            column="38"/>
+    </issue>
+
+</issues>

@@ -1,0 +1,1 @@
+{"models":[{"file_url":"asset://models/u2netp.onnx","id":"u2netp","input":{"height":320,"width":320},"kind":"SalientMask","min_app_version":1,"name":"U2NetP","notes":"Model bawaan untuk hapus background umum. Ringan dan cepat.","sha256":"87d7f434f1e9c09f130e342815f1cc795e5d19129d41111e3873255f14378cfa","size_bytes":4615346,"version":"1"}],"version":1}

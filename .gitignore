@@ -1,0 +1,27 @@
+*.iml
+.gradle/
+local.properties
+.idea/
+build/
+app/build/
+rust/eraser-core/target/
+basecode/
+*.apk
+
+# ONNX Runtime binaries (fetched by tools/fetch_onnxruntime.sh)
+rust/eraser-core/third_party/
+
+# Scratch konversi model (bobot sumber, clone repo acuan)
+tools/work/
+
+# Signing rilis lokal (jangan dikomit)
+app/key.properties
+*.jks
+*.keystore
+
+# File model biner (besar; reproduksi via tools/export_*.py atau unduh dari
+# GitHub Release models-v1 repo ini)
+models/**/*.onnx
+models/**/*.zip
+app/src/main/assets/models/*.onnx
+gradle/wrapper/gradle-wrapper.jar
