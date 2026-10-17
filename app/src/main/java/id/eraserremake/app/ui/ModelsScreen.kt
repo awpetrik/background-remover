@@ -100,7 +100,7 @@ fun ModelsScreen() {
                 )
             }
         }
-        items(installed, key = { it.id }) { model ->
+        items(installed, key = { "terpasang-" + it.id }) { model ->
             Card(modifier = Modifier.fillMaxWidth()) {
                 Column(
                     modifier = Modifier.padding(12.dp),
@@ -138,7 +138,7 @@ fun ModelsScreen() {
             Text("Katalog", style = MaterialTheme.typography.titleMedium)
             Text(catalogNote, style = MaterialTheme.typography.bodySmall)
         }
-        items(catalog, key = { it.id }) { entry ->
+        items(catalog, key = { "katalog-" + it.id }) { entry ->
             val isInstalled = installed.any { it.id == entry.id }
             Card(modifier = Modifier.fillMaxWidth()) {
                 Column(
